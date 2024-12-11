@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+		/>
+	</head>
+	<body>
+		<div class="cruds">
+			<div class="head">
+				<h2 id="themeToggle">CRUDS</h2>
+				<p>| CREATE | READ | UPDATE | DELETE | SEARCH |</p>
+			</div>
+			<div class="inputs">
+				<input type="text" placeholder="Title" name="title" id="title" />
+				<div class="price">
+					<input
+						type="number"
+						placeholder="Price"
+						name="price"
+						id="price"
+						min="0"
+					/>
+					<input
+						type="number"
+						placeholder="Taxes"
+						name="taxes"
+						id="taxes"
+						min="0"
+					/>
+					<input type="number" placeholder="Ads" name="ads" id="ads" min="0" />
+					<input
+						type="number"
+						placeholder="Discount"
+						name="discount"
+						id="discount"
+						min="0"
+					/>
+					<small id="total">0</small>
+				</div>
+				<input type="number" placeholder="Count" name="count" id="count" />
+				<input
+					type="text"
+					placeholder="Category"
+					name="category"
+					id="category"
+				/>
+				<button id="submit">Create</button>
+			</div>
+			<div class="outputs">
+				<div class="actionBlock">
+					<input type="search" name="search" id="search" placeholder="Search By Title" />
+					<div class="searchButtons">
+						<button id="searchTitle">Search By Title</button>
+						<button id="searchCategory">Search By Category</button>
+					</div>
+				</div>
+				<button id="clear">Clear All Data !!!</button>
+				<table>
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>title</th>
+							<th>price</th>
+							<th>taxes</th>
+							<th>ads</th>
+							<th>discount</th>
+							<th>total</th>
+							<th>Category</th>
+						</tr>
+					</thead>
+					<tbody id="tbody"></tbody>
+				</table>
+			</div>
+		</div>
+		<script src="script.js"></script>
+	</body>
+</html>

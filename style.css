@@ -1,0 +1,156 @@
+:root[data-theme="light"] {
+	--text: #10121e;
+	--placeholder: #414141;
+	--background: #e4e6f1;
+	--primary: #353c5f;
+	--secondary: #b392c3;
+	--accent: #884f92;
+}
+:root[data-theme="dark"] {
+	--text: #e2e4ef;
+	--placeholder: #a5a5a5;
+	--background: #0e0f1a;
+	--primary: #a0a8cb;
+	--secondary: #5c3b6c;
+	--accent: #a76fb1;
+}
+
+:root {
+	--linearPrimarySecondary: linear-gradient(#a0a8cb, #5c3b6c);
+	--linearPrimaryAccent: linear-gradient(#a0a8cb, #a76fb1);
+	--linearSecondaryAccent: linear-gradient(#5c3b6c, #a76fb1);
+	--border_default: 1px solid;
+	--radius: 10px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: var(--background);
+	color: var(--text);
+	font-size: 14px;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	transition: 0.5s;
+}
+
+input {
+	display: b;
+	width: 100%;
+	height: 25px;
+	outline: none;
+	border: none;
+	background: var(--secondary);
+	margin: 5px 0px;
+	border-radius: var(--radius);
+	padding: 5px 10px;
+	color: var(--text);
+	transition: 0.25s;
+}
+
+input:focus:not(.price input) {
+	transform: scaleX(1.02);
+}
+
+button {
+	width: 100%;
+	height: 25px;
+	border: none;
+	border-radius: var(--radius);
+	cursor: pointer;
+	background: var(--accent);
+	color: var(--text);
+	margin: 5px 0px;
+}
+
+.cruds {
+	width: 80%;
+	margin: auto;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.head h2 {
+	display: inline;
+	cursor: pointer;
+	background: var(--linearPrimaryAccent);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.head p {
+	text-decoration: overline;
+	margin-top: 5px;
+}
+
+.inputs,
+.head,
+.outputs {
+	margin: 25px 0px;
+}
+
+.inputs .price {
+	display: flex;
+}
+
+.inputs .price input {
+	width: 15%;
+	margin-right: 5px;
+}
+
+.inputs .price input:focus {
+	flex-grow: 2;
+}
+
+.inputs .price #total {
+	height: 25px;
+	text-align: center;
+	flex-grow: 1;
+	background: var(--secondary);
+	margin: 5px 0px;
+	padding: 3px;
+	border-radius: var(--radius);
+}
+
+.inputs .price #total::before {
+	content: "Total: ";
+	color: var(--placeholder);
+}
+
+::placeholder {
+	color: var(--placeholder);
+}
+
+.inputs #submit,
+.outputs #clear {
+	width: 400px;
+}
+
+.outputs .searchButtons {
+	display: flex;
+	justify-content: space-around;
+}
+
+.outputs .searchButtons button {
+	width: 200px;
+}
+
+.outputs table {
+	width: 100%;
+	text-align: center;
+	margin: 25px 0px;
+	border-collapse: collapse;
+}
+
+.outputs table tbody td button {
+	width: 25px;
+}
+
+.outputs table tbody tr:hover {
+	height: 50px;
+	background-color: #7a7a7a25;
+}

@@ -9,15 +9,24 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
 		/>
+		<link
+			href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
 		<div class="cruds">
 			<div class="head">
-				<h2 id="themeToggle">CRUDS</h2>
+				<h1 id="themeToggle"><i class="fa-solid fa-moon"></i></h1>
+				<h2>CRUDS</h2>
 				<p>| CREATE | READ | UPDATE | DELETE | SEARCH |</p>
 			</div>
 			<div class="inputs">
 				<input type="text" placeholder="Title" name="title" id="title" />
+				<span class="error title-error">
+					<i class="bx bx-error-circle error-icon"></i>
+					<p></p>
+				</span>
 				<div class="price">
 					<input
 						type="number"
@@ -41,8 +50,24 @@
 						id="discount"
 						min="0"
 					/>
-					<small id="total">0</small>
+					<p id="total">0</p>
 				</div>
+				<span class="error price-error">
+					<i class="bx bx-error-circle error-icon"></i>
+					<p></p>
+				</span>
+				<span class="error taxes-error">
+					<i class="bx bx-error-circle error-icon"></i>
+					<p></p>
+				</span>
+				<span class="error ads-error">
+					<i class="bx bx-error-circle error-icon"></i>
+					<p></p>
+				</span>
+				<span class="error discount-error">
+					<i class="bx bx-error-circle error-icon"></i>
+					<p></p>
+				</span>
 				<input type="number" placeholder="Count" name="count" id="count" />
 				<input
 					type="text"
@@ -50,17 +75,26 @@
 					name="category"
 					id="category"
 				/>
+				<span class="error category-error">
+					<i class="bx bx-error-circle error-icon"></i>
+					<p></p>
+				</span>
 				<button id="submit">Create</button>
 			</div>
 			<div class="outputs">
 				<div class="actionBlock">
-					<input type="search" name="search" id="search" placeholder="Search By Title" />
+					<input
+						type="search"
+						name="search"
+						id="search"
+						placeholder="Search By Title"
+					/>
 					<div class="searchButtons">
 						<button id="searchTitle">Search By Title</button>
 						<button id="searchCategory">Search By Category</button>
 					</div>
 				</div>
-				<button id="clear">Clear All Data !!!</button>
+				<button id="clear"></button>
 				<table>
 					<thead>
 						<tr>
@@ -78,6 +112,7 @@
 				</table>
 			</div>
 		</div>
+		<button id="btn-scroll"><i class="fa-solid fa-angles-up"></i></button>
 		<script src="script.js"></script>
 	</body>
 </html>

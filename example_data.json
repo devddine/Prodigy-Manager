@@ -1,0 +1,290 @@
+[
+	{
+		"title": "apple macbook pro 16-inch",
+		"price": 2399,
+		"taxes": 240,
+		"ads": 10,
+		"discount": 5,
+		"total": 2644,
+		"category": "electronics"
+	},
+	{
+		"title": "dell xps 13",
+		"price": 999,
+		"taxes": 100,
+		"ads": 7,
+		"discount": 3,
+		"total": 1103,
+		"category": "electronics"
+	},
+	{
+		"title": "hp spectre x360",
+		"price": 1299,
+		"taxes": 130,
+		"ads": 8,
+		"discount": 4,
+		"total": 1433,
+		"category": "electronics"
+	},
+	{
+		"title": "lenovo thinkpad x1 carbon",
+		"price": 1500,
+		"taxes": 150,
+		"ads": 6,
+		"discount": 2,
+		"total": 1654,
+		"category": "electronics"
+	},
+	{
+		"title": "asus rog zephyrus g14",
+		"price": 1499,
+		"taxes": 150,
+		"ads": 9,
+		"discount": 6,
+		"total": 1652,
+		"category": "electronics"
+	},
+	{
+		"title": "sony playstation 5",
+		"price": 499,
+		"taxes": 50,
+		"ads": 20,
+		"discount": 0,
+		"total": 569,
+		"category": "gaming"
+	},
+	{
+		"title": "microsoft xbox series x",
+		"price": 499,
+		"taxes": 50,
+		"ads": 15,
+		"discount": 0,
+		"total": 564,
+		"category": "gaming"
+	},
+	{
+		"title": "nintendo switch oled",
+		"price": 349,
+		"taxes": 35,
+		"ads": 12,
+		"discount": 5,
+		"total": 391,
+		"category": "gaming"
+	},
+	{
+		"title": "samsung galaxy s23 ultra",
+		"price": 1199,
+		"taxes": 120,
+		"ads": 18,
+		"discount": 10,
+		"total": 1327,
+		"category": "mobile"
+	},
+	{
+		"title": "apple iphone 15 pro",
+		"price": 1099,
+		"taxes": 110,
+		"ads": 22,
+		"discount": 5,
+		"total": 1226,
+		"category": "mobile"
+	},
+	{
+		"title": "google pixel 8 pro",
+		"price": 899,
+		"taxes": 90,
+		"ads": 10,
+		"discount": 7,
+		"total": 992,
+		"category": "mobile"
+	},
+	{
+		"title": "samsung galaxy z fold 5",
+		"price": 1799,
+		"taxes": 180,
+		"ads": 8,
+		"discount": 5,
+		"total": 1982,
+		"category": "mobile"
+	},
+	{
+		"title": "apple airpods pro (2nd generation)",
+		"price": 249,
+		"taxes": 25,
+		"ads": 5,
+		"discount": 10,
+		"total": 269,
+		"category": "accessories"
+	},
+	{
+		"title": "sony wh-1000xm5",
+		"price": 349,
+		"taxes": 35,
+		"ads": 7,
+		"discount": 5,
+		"total": 386,
+		"category": "accessories"
+	},
+	{
+		"title": "bose quietcomfort 45",
+		"price": 329,
+		"taxes": 33,
+		"ads": 6,
+		"discount": 8,
+		"total": 360,
+		"category": "accessories"
+	},
+	{
+		"title": "jbl flip 5",
+		"price": 119,
+		"taxes": 12,
+		"ads": 5,
+		"discount": 5,
+		"total": 131,
+		"category": "accessories"
+	},
+	{
+		"title": "logitech g pro x",
+		"price": 129,
+		"taxes": 13,
+		"ads": 4,
+		"discount": 10,
+		"total": 136,
+		"category": "accessories"
+	},
+	{
+		"title": "hp envy 6055e",
+		"price": 129,
+		"taxes": 13,
+		"ads": 3,
+		"discount": 0,
+		"total": 145,
+		"category": "office"
+	},
+	{
+		"title": "canon pixma ts3320",
+		"price": 69,
+		"taxes": 7,
+		"ads": 2,
+		"discount": 3,
+		"total": 75,
+		"category": "office"
+	},
+	{
+		"title": "epson ecotank et-2720",
+		"price": 199,
+		"taxes": 20,
+		"ads": 4,
+		"discount": 6,
+		"total": 217,
+		"category": "office"
+	},
+	{
+		"title": "brother hl-l2395dw",
+		"price": 149,
+		"taxes": 15,
+		"ads": 6,
+		"discount": 4,
+		"total": 166,
+		"category": "office"
+	},
+	{
+		"title": "xerox phaser 6510",
+		"price": 299,
+		"taxes": 30,
+		"ads": 5,
+		"discount": 2,
+		"total": 332,
+		"category": "office"
+	},
+	{
+		"title": "gopro hero 11 black",
+		"price": 399,
+		"taxes": 40,
+		"ads": 9,
+		"discount": 3,
+		"total": 445,
+		"category": "cameras"
+	},
+	{
+		"title": "sony alpha 7 iv",
+		"price": 2499,
+		"taxes": 250,
+		"ads": 10,
+		"discount": 5,
+		"total": 2754,
+		"category": "cameras"
+	},
+	{
+		"title": "canon eos r5",
+		"price": 3899,
+		"taxes": 390,
+		"ads": 8,
+		"discount": 4,
+		"total": 4293,
+		"category": "cameras"
+	},
+	{
+		"title": "fujifilm x-t5",
+		"price": 1699,
+		"taxes": 170,
+		"ads": 7,
+		"discount": 2,
+		"total": 1874,
+		"category": "cameras"
+	},
+	{
+		"title": "nikon z9",
+		"price": 5499,
+		"taxes": 550,
+		"ads": 12,
+		"discount": 6,
+		"total": 6055,
+		"category": "cameras"
+	},
+	{
+		"title": "samsung qn90c 65-inch qled tv",
+		"price": 1799,
+		"taxes": 180,
+		"ads": 10,
+		"discount": 5,
+		"total": 1984,
+		"category": "tv"
+	},
+	{
+		"title": "lg oled55cxpua alexa built-in oled tv",
+		"price": 1499,
+		"taxes": 150,
+		"ads": 8,
+		"discount": 7,
+		"total": 1650,
+		"category": "tv"
+	},
+	{
+		"title": "sony bravia xr a80j 55-inch oled tv",
+		"price": 1799,
+		"taxes": 180,
+		"ads": 6,
+		"discount": 5,
+		"total": 1980,
+		"category": "tv"
+	},
+	{
+		"title": "vizio 65-inch 4k smart tv",
+		"price": 699,
+		"taxes": 70,
+		"ads": 9,
+		"discount": 10,
+		"total": 768,
+		"category": "tv"
+	},
+	{
+		"title": "tcl 50-inch 5-series 4k tv",
+		"price": 399,
+		"taxes": 40,
+		"ads": 7,
+		"discount": 8,
+		"total": 438,
+		"category": "tv"
+	}
+]

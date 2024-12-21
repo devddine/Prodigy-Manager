@@ -40,7 +40,7 @@
 
 ## 🎥 Live Demo (SOON..) <a name = "demo"></a>
 
-![Demo](https://media1.giphy.com/media/oFYKw5OTZBZzVONpUh/giphy.gif)
+![Demo](/assets/coding.gif)
 
 ## 💭 How it works <a name = "working"></a>
 

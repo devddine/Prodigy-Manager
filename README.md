@@ -18,7 +18,7 @@
 
 - [Features](#features)
 - [Preview](#preview)
-- [Live Demo (SOON..)](#demo)
+- [Live Demo](#demo)
 - [How it works](#working)
 - [Getting Started](#getting_started)
 - [Deploying your own bot](#deployment)
@@ -38,9 +38,9 @@
 
 ![Preview](/assets/preview.jpg)
 
-## 🎥 Live Demo (SOON..) <a name = "demo"></a>
+## 🎥 Live Demo <a name = "demo"></a>
 
-![Demo](/assets/coding.gif)
+[Check it out here](https://devddine.github.io/Prodigy-Manager/)
 
 ## 💭 How it works <a name = "working"></a>
 

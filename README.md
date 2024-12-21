@@ -80,5 +80,5 @@ Contributions are welcome! Feel free to submit a pull request or report any issu
 
 ## 📜 License <a name = "license"></a>
 
-This project is open-source and available under the MIT License. See the LICENSE file for more information.
+This project is open-source and available under the MIT License. See the [LICENSE](/LICENSE) file for more information.
 

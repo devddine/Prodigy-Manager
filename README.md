@@ -61,7 +61,7 @@
 2. Navigate to the project directory:
 
    ```bash
-   cd ProductManager
+   cd Prodigy-Manager
    ```
 
 3. Open index.html in your favorite browser:

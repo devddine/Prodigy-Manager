@@ -21,7 +21,6 @@
 - [Live Demo](#demo)
 - [How it works](#working)
 - [Getting Started](#getting_started)
-- [Deploying your own bot](#deployment)
 - [Built Using](#built_using)
 - [Contributions](#contributions)
 - [License](#license)

@@ -11,7 +11,7 @@
 
 ---
 
-<p align="center"> 💻 A simple, lightweight one-page application to manage products with CRUD operations, search functionality, and theme switching. Built using plain HTML, CSS, and JavaScript.
+<p align="center"> 💻 A simple, lightweight one-page application to manage products with CRUD operations, search functionality, and theme switching. Built using plain HTML, CSS, and JavaScript.<br>Inspired From : https://www.youtube.com/watch?v=nJZAvdUhUMs
 </p>
 
 ## 📝 Table of Contents

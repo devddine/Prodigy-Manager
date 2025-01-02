@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![Status](https://img.shields.io/website?url=https://devddine.github.io/Prodigy-Manager)](https://devddine.github.io/Prodigy-Manager)
 [![GitHub Issues](https://img.shields.io/github/issues/devddine/Prodigy-Manager.svg)](https://github.com/devddine/Prodigy-Manager/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/devddine/Prodigy-Manager.svg)](https://github.com/devddine/Prodigy-Manager/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
@@ -11,7 +11,7 @@
 
 ---
 
-<p align="center"> 💻 A simple, lightweight one-page application to manage products with CRUD operations, search functionality, and theme switching. Built using plain HTML, CSS, and JavaScript.<br>Inspired From : https://www.youtube.com/watch?v=nJZAvdUhUMs
+<p align="center"> 💻 A simple, lightweight one-page application to manage products with CRUD operations, search functionality, and theme switching. Built using plain HTML, CSS, and JavaScript.
 </p>
 
 ## 📝 Table of Contents
@@ -32,6 +32,7 @@
 - **Delete Products**: Remove unwanted products with a click.
 - **Search**: Quickly find products by name or keyword.
 - **Theme Switching**: Toggle between light and dark modes.
+- **API Integration**: Manage product data with a fake JSON server.
 
 ## 📐 Preview <a name = "preview"></a>
 
@@ -39,7 +40,7 @@
 
 ## 🎥 Live Demo <a name = "demo"></a>
 
-[Check it out here](https://devddine.github.io/Prodigy-Manager/)
+[Check it out here](https://devddine.github.io/Prodigy-Manager/) <small> \*still under development, best to run it on your own device</small>
 
 ## 💭 How it works <a name = "working"></a>
 
@@ -63,15 +64,14 @@
    cd Prodigy-Manager
    ```
 
-3. Open index.html in your favorite browser:
-
-   open index.html with [live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+3. Open index.html with [live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - **HTML**: Structure of the web application.
 - **CSS**: Styling for light and dark themes.
 - **JavaScript**: Core functionality for CRUD operations and theme toggle.
+- **JSON-Server**: Simulated REST API to handle product data for testing.
 
 ## 🤝 Contributions <a name = "contributions"></a>
 
@@ -80,4 +80,3 @@ Contributions are welcome! Feel free to submit a pull request or report any issu
 ## 📜 License <a name = "license"></a>
 
 This project is open-source and available under the MIT License. See the [LICENSE](/LICENSE) file for more information.
-

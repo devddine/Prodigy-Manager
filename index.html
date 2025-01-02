@@ -1,118 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-		<link rel="stylesheet" href="styles/style.css" />
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
-		/>
-	</head>
-	<body>
-		<div class="cruds">
-			<div class="head">
-				<h1 id="themeToggle"><i class="fa-solid fa-moon"></i></h1>
-				<h2>CRUDS</h2>
-				<p>| CREATE | READ | UPDATE | DELETE | SEARCH |</p>
-			</div>
-			<div class="inputs">
-				<input type="text" placeholder="Title" name="title" id="title" />
-				<span class="error title-error">
-					<i class="bx bx-error-circle error-icon"></i>
-					<p></p>
-				</span>
-				<div class="price">
-					<input
-						type="number"
-						placeholder="Price"
-						name="price"
-						id="price"
-						min="0"
-					/>
-					<input
-						type="number"
-						placeholder="Taxes"
-						name="taxes"
-						id="taxes"
-						min="0"
-					/>
-					<input type="number" placeholder="Ads" name="ads" id="ads" min="0" />
-					<input
-						type="number"
-						placeholder="Discount"
-						name="discount"
-						id="discount"
-						min="0"
-					/>
-					<p id="total">0</p>
-				</div>
-				<span class="error price-error">
-					<i class="bx bx-error-circle error-icon"></i>
-					<p></p>
-				</span>
-				<span class="error taxes-error">
-					<i class="bx bx-error-circle error-icon"></i>
-					<p></p>
-				</span>
-				<span class="error ads-error">
-					<i class="bx bx-error-circle error-icon"></i>
-					<p></p>
-				</span>
-				<span class="error discount-error">
-					<i class="bx bx-error-circle error-icon"></i>
-					<p></p>
-				</span>
-				<input type="number" placeholder="Count" name="count" id="count" />
-				<input
-					type="text"
-					placeholder="Category"
-					name="category"
-					id="category"
-				/>
-				<span class="error category-error">
-					<i class="bx bx-error-circle error-icon"></i>
-					<p></p>
-				</span>
-				<button id="submit">Create</button>
-			</div>
-			<div class="outputs">
-				<div class="actionBlock">
-					<input
-						type="search"
-						name="search"
-						id="search"
-						placeholder="Search By Title"
-					/>
-					<div class="searchButtons">
-						<button id="searchTitle">Search By Title</button>
-						<button id="searchCategory">Search By Category</button>
-					</div>
-				</div>
-				<button id="clear"></button>
-				<table>
-					<thead>
-						<tr>
-							<th>id</th>
-							<th>title</th>
-							<th>price</th>
-							<th>taxes</th>
-							<th>ads</th>
-							<th>discount</th>
-							<th>total</th>
-							<th>Category</th>
-						</tr>
-					</thead>
-					<tbody id="tbody"></tbody>
-				</table>
-			</div>
-		</div>
-		<button id="btn-scroll"><i class="fa-solid fa-angles-up"></i></button>
-		<script src="/scripts/script.js"></script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUDS | Create, Read, Update, Delete, Search</title>
+    <link rel="icon" type="image/x-icon" href="/assets/js.ico" />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" />
+  </head>
+  <body>
+    <div class="cruds">
+      <div class="head">
+        <h1 id="themeToggle"><i class="fa-solid fa-moon"></i></h1>
+        <h2>CRUDS</h2>
+        <p>| CREATE | READ | UPDATE | DELETE | SEARCH |</p>
+      </div>
+      <div class="inputs">
+        <input type="text" placeholder="Title" name="title" id="title" />
+        <span class="error title-error">
+          <i class="bx bx-error-circle error-icon"></i>
+          <p></p>
+        </span>
+        <div class="price">
+          <input type="number" placeholder="Price" name="price" id="price" min="0" />
+          <input type="number" placeholder="Taxes" name="taxes" id="taxes" min="0" />
+          <input type="number" placeholder="Ads" name="ads" id="ads" min="0" />
+          <input type="number" placeholder="Discount" name="discount" id="discount" min="0" />
+          <p id="total">0</p>
+        </div>
+        <span class="error price-error">
+          <i class="bx bx-error-circle error-icon"></i>
+          <p></p>
+        </span>
+        <span class="error taxes-error">
+          <i class="bx bx-error-circle error-icon"></i>
+          <p></p>
+        </span>
+        <span class="error ads-error">
+          <i class="bx bx-error-circle error-icon"></i>
+          <p></p>
+        </span>
+        <span class="error discount-error">
+          <i class="bx bx-error-circle error-icon"></i>
+          <p></p>
+        </span>
+        <input type="number" placeholder="Count" name="count" id="count" />
+        <input type="text" placeholder="Category" name="category" id="category" />
+        <span class="error category-error">
+          <i class="bx bx-error-circle error-icon"></i>
+          <p></p>
+        </span>
+        <button id="submit">Create</button>
+      </div>
+      <div class="outputs">
+        <div class="actionBlock">
+          <input type="search" name="search" id="search" placeholder="Search By Title" />
+          <div class="searchButtons">
+            <button id="searchTitle">Search By Title</button>
+            <button id="searchCategory">Search By Category</button>
+          </div>
+        </div>
+        <button id="clear"></button>
+        <table>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>title</th>
+              <th>price</th>
+              <th>taxes</th>
+              <th>ads</th>
+              <th>discount</th>
+              <th>total</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <button id="btn-scroll"><i class="fa-solid fa-angles-up"></i></button>
+    <script src="/scripts/script.js"></script>
+  </body>
 </html>

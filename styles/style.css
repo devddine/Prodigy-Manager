@@ -16,9 +16,7 @@
 }
 
 :root {
-	--linearPrimarySecondary: linear-gradient(#a0a8cb, #5c3b6c);
 	--linearPrimaryAccent: linear-gradient(#a0a8cb, #a76fb1);
-	--linearSecondaryAccent: linear-gradient(#5c3b6c, #a76fb1);
 	--border_default: 1px solid;
 	--radius: 10px;
 }

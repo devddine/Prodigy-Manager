@@ -1,9 +1,13 @@
 "use strict";
+// TODO JSON-SERVER INSTEAD OF LocalStorage === DONE
+// TODO PAGINATION SYSTEM === pending
 
-//* Starting
-var Products;
-var errorMessage;
-var editIndex = 0;
+//* GLOBAL
+let products = [];
+let errorMessage = "";
+let editId = 0;
+
+//* DOM
 const themeToggle = document.getElementById("themeToggle");
 const title = document.getElementById("title");
 const price = document.getElementById("price");
@@ -20,120 +24,193 @@ const searchCategory = document.getElementById("searchCategory");
 const edit = document.getElementById("edit");
 const remove = document.getElementById("remove");
 const clear = document.getElementById("clear");
+const btn = document.getElementById("btn-scroll");
+
+//* API
+const baseUrl = "http://localhost:3030/";
+const defaultHeader = {
+  "Content-type": "application/json; charset=UTF-8",
+};
+
+//* API FUNCTION
+async function httpRequest(dataType, apiMethod, content) {
+  let tempMsg;
+  let requestMsg = "No message yet...";
+  let requestOptions;
+  if (dataType === "theme") {
+    if (apiMethod === "PUT") {
+      requestOptions = {
+        method: apiMethod,
+        headers: {
+          defaultHeader,
+        },
+        body: JSON.stringify({
+          website: content,
+        }),
+      };
+      requestMsg = `The theme switched to ${content}`;
+    }
+  } else if (dataType === "products") {
+    if (apiMethod === "POST" || apiMethod === "PUT") {
+      requestOptions = {
+        method: apiMethod,
+        headers: {
+          defaultHeader,
+        },
+        body: JSON.stringify(content),
+      };
+      if (apiMethod === "PUT") {
+        dataType += "/" + content.id;
+        requestMsg = `"${content.title}" has been successfully edited`;
+      } else {
+        requestMsg = `"${content.title}" added successfully`;
+      }
+    } else if (apiMethod === "DELETE") {
+      requestOptions = {
+        method: apiMethod,
+      };
+      dataType += "/" + content;
+      requestMsg = `The product has been successfully deleted`;
+    }
+  }
+  if (apiMethod === "GET") {
+    requestOptions = {
+      method: apiMethod,
+      headers: {
+        defaultHeader,
+      },
+    };
+    content ? (dataType += "/" + content) : dataType;
+    requestMsg = `Website refreshed`;
+  }
+  try {
+    const response = await fetch(baseUrl + dataType, requestOptions);
+    const data = await response.json();
+    tempMsg = `${response.status} ${response.statusText} | ${requestMsg}`;
+    if (apiMethod != "GET" && dataType != "theme") {
+      tempMsg = `Product ID: ${data.id} | ${tempMsg}`;
+    }
+    console.log(tempMsg);
+    return data;
+  } catch (error) {
+    console.error(`Something wrong happening: `, error);
+  }
+}
 
 //* DARK/LIGHT MODE
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme) {
-	document.documentElement.setAttribute("data-theme", savedTheme);
+getTheme();
+async function getTheme() {
+  let savedTheme = await httpRequest("theme", "GET");
+  if (savedTheme) {
+    document.documentElement.setAttribute("data-theme", savedTheme.website);
+  }
 }
-themeToggle.addEventListener("click", () => {
-	const currentTheme = document.documentElement.getAttribute("data-theme");
-	const newTheme = currentTheme === "dark" ? "light" : "dark";
 
-	document.documentElement.setAttribute("data-theme", newTheme);
-	localStorage.setItem("theme", newTheme);
+themeToggle.addEventListener("click", async () => {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", newTheme);
+  await httpRequest("theme", "PUT", newTheme);
 });
 
-//* GET TOTAL
+//* CALC TOTAL
 price.addEventListener("input", getTotal);
 taxes.addEventListener("input", getTotal);
 ads.addEventListener("input", getTotal);
 discount.addEventListener("input", getTotal);
+
 function getTotal() {
-	let result = +price.value + +taxes.value + +ads.value - +discount.value;
-	if (result > 0) {
-		total.innerHTML = result;
-		total.style.background = "#007F00";
-	} else if (result < 0) {
-		total.innerHTML = result;
-		total.style.background = "#800000";
-	} else {
-		total.innerHTML = "0";
-		total.style.background = "";
-	}
+  let totalValue = Number(price.value) + Number(taxes.value) + Number(ads.value) - Number(discount.value);
+
+  if (totalValue > 0) {
+    total.innerHTML = totalValue;
+    total.style.background = "#007F00";
+  } else if (totalValue < 0) {
+    total.innerHTML = totalValue;
+    total.style.background = "#800000";
+  } else {
+    total.innerHTML = "0";
+    total.style.background = "";
+  }
 }
 
-//* CREATE PRODUCTS & SAVE TO LS & Update Products
-submit.addEventListener("click", () => {
-	let toggle = submit.innerHTML;
-	if (
-		validateTitle(title) &&
-		validatePrice(price) &&
-		validateTaxes(taxes) &&
-		validateAds(ads) &&
-		validateDiscount(discount) &&
-		validateCategory(category)
-	) {
-		if (toggle === "Create") {
-			let newProduct = {
-				title: title.value,
-				price: +price.value,
-				taxes: +taxes.value,
-				ads: +ads.value,
-				discount: +discount.value,
-				total: total.innerHTML,
-				category: category.value,
-			};
-			+count.value <= 0 ? +(count.value = 1) : +count.value;
-			+count.value > 100 ? +(count.value = 100) : +count.value;
-			for (let i = 0; i < +count.value; i++) {
-				Products.push(newProduct);
-			}
-		} else {
-			Products[editIndex].title = title.value;
-			Products[editIndex].price = +price.value;
-			Products[editIndex].taxes = +taxes.value;
-			Products[editIndex].ads = +ads.value;
-			Products[editIndex].discount = +discount.value;
-			Products[editIndex].total = total.innerHTML;
-			Products[editIndex].category = category.value;
-			submit.innerHTML = "Create";
-			count.style.display = "";
-			editIndex = 0;
-		}
-		localStorage.setItem("products", JSON.stringify(Products));
-		readDB();
-		clearDB();
-	}
+// TODO ONE REQUEST FOR CREATING MULTIPLE PRODUCTS
+//* CREATE/UPDATE PRODUCTS
+submit.addEventListener("click", async () => {
+  // let newProducts = [];
+  if (
+    validateInput(title, titleError, "Title", 3) &&
+    validateInput(price, priceError, "Price", 0, true) &&
+    validateInput(taxes, taxesError, "Taxes", 0, true) &&
+    validateInput(ads, adsError, "Ads", 0, true) &&
+    validateInput(discount, discountError, "Discount", 0, true) &&
+    validateInput(category, categoryError, "Category", 3)
+  ) {
+    const productData = {
+      title: title.value.trim(),
+      price: Number(price.value),
+      taxes: Number(taxes.value),
+      ads: Number(ads.value),
+      discount: Number(discount.value),
+      total: total.textContent,
+      category: category.value.trim(),
+    };
+    if (submit.textContent === "Create") {
+      let counter = Number(count.value);
+      counter <= 0 ? (counter = 1) : counter;
+      counter > 100 ? (counter = 100) : counter;
+      for (let i = 0; i < counter; i++) {
+        await httpRequest("products", "POST", productData);
+        // newProducts.push(newProduct)
+      }
+    } else {
+      await httpRequest("products", "PUT", productData);
+      submit.innerHTML = "Create";
+      count.style.display = "";
+      editId = 0;
+    }
+
+    // await httpRequest("products", "POST", newProducts);
+    clearInputs();
+    getProducts();
+  }
 });
 
-//* CLEAR AFTER CREATE
-function clearDB() {
-	title.value = "";
-	price.value = "";
-	taxes.value = "";
-	ads.value = "";
-	discount.value = "";
-	count.value = "";
-	category.value = "";
-	getTotal();
+//* CLEAR INPUTS
+function clearInputs() {
+  title.value = "";
+  price.value = "";
+  taxes.value = "";
+  ads.value = "";
+  discount.value = "";
+  count.value = "";
+  category.value = "";
+  getTotal();
 }
 
 //* READ/SHOW DATA
-readDB();
-function readDB() {
-	let table = "";
-	let savedProducts = localStorage.getItem("products");
-	if (savedProducts) {
-		Products = JSON.parse(savedProducts);
-		clear.style.display = ""; /* FOR CLEAR ALL BTN STYLE*/
-		clear.innerHTML = `Clear All Data !!! (${Products.length})`;
-	} else {
-		Products = [];
-		clear.style.display = "none"; /* FOR CLEAR ALL BTN STYLE*/
-		clear.innerHTML = ``;
-	}
-	console.log(Products);
-	for (let i = 0; i < Products.length; i++) {
-		table += generateContent(Products[i], i);
-	}
-	document.getElementById("tbody").innerHTML = table;
+getProducts();
+async function getProducts() {
+  let table = "";
+  products = await httpRequest("products", "GET");
+  if (products.length > 0) {
+    clear.style.display = "";
+    clear.innerHTML = `Clear All Data !!! (${products.length})`;
+  } else {
+    clear.style.display = "none";
+    clear.innerHTML = ``;
+  }
+
+  for (let product of products) {
+    table += generateContent(product);
+  }
+  document.getElementById("tbody").innerHTML = table;
 }
 
-function generateContent(product, index) {
-	return `
+function generateContent(product) {
+  return `
 			<tr>
-					<td>${index + 1}</td>
+					<td>${product.id}</td>
 					<td>${product.title}</td>
 					<td>${product.price}</td>
 					<td>${product.taxes}</td>
@@ -142,81 +219,74 @@ function generateContent(product, index) {
 					<td>${product.total}</td>
 					<td>${product.category}</td>
 					<td>
-							<button class="edit" onclick="editDB(${index})"><i class="fa-solid fa-pen"></i></button>
-							<button class="remove" onclick="removeDB(${index})"><i class="fa-solid fa-trash"></i></button>
-					</td>
+					<button class="edit" id="${product.id}" onclick="editProduct('${product.id}')"><i class="fa-solid fa-pen"></i></button>
+					<button class="remove" id="${product.id}" onclick="removeProduct('${product.id}')"><i class="fa-solid fa-trash"></i></button>
+			</td>
 			</tr>`;
 }
 
-//* MAKE LOOP FOR COUNT
-//// ADDED TO CREATE PRODUCTS PART
-
-//* DELETE PRODUCTS
-function removeDB(index) {
-	Products.splice(index, 1);
-	localStorage.setItem("products", JSON.stringify(Products));
-	readDB();
+// * DELETE PRODUCTS
+async function removeProduct(id, multi) {
+  await httpRequest("products", "DELETE", id);
+  if (multi !== true) {
+    getProducts();
+  }
 }
 
+//* CLEAR DATA
+clear.addEventListener("click", async () => {
+  if (confirm("Are you sure?")) {
+    for (let product of products) {
+      await removeProduct(product.id, true);
+    }
+    getProducts();
+  }
+});
+
 //* UPDATE
-function editDB(index) {
-	title.value = Products[index].title;
-	price.value = Products[index].price;
-	taxes.value = Products[index].taxes;
-	ads.value = Products[index].ads;
-	discount.value = Products[index].discount;
-	category.value = Products[index].category;
-	getTotal();
-	count.style.display = "none";
-	submit.innerHTML = "Update";
-	readDB();
-	editIndex = index;
-	scroll({ top: 0, left: 0, behavior: "smooth" });
+async function editProduct(id) {
+  let product = await httpRequest("products", "GET", id);
+  title.value = product.title;
+  price.value = product.price;
+  taxes.value = product.taxes;
+  ads.value = product.ads;
+  discount.value = product.discount;
+  category.value = product.category;
+  getTotal();
+  count.style.display = "none";
+  submit.innerHTML = "Update";
+  editId = id;
+  scroll({ top: 0, left: 0, behavior: "smooth" });
 }
 
 //* SEARCH
 searchTitle.addEventListener("click", () => {
-	search.placeholder = "Search By Title";
-	searchData(search.value, search.placeholder);
+  search.placeholder = "Search By Title";
+  searchData(search.value, search.placeholder);
 });
 searchCategory.addEventListener("click", () => {
-	search.placeholder = "Search By Category";
-	searchData(search.value, search.placeholder);
+  search.placeholder = "Search By Category";
+  searchData(search.value, search.placeholder);
 });
 search.addEventListener("keyup", () => {
-	searchData(search.value, search.placeholder);
+  searchData(search.value, search.placeholder);
 });
 
 function searchData(value, placeholder) {
-	let table = "";
-	for (let i = 0; i < Products.length; i++) {
-		if (
-			(placeholder === "Search By Title" &&
-				Products[i].title
-					.toLowerCase()
-					.trim()
-					.includes(value.toLowerCase().trim())) ||
-			(placeholder === "Search By Category" &&
-				Products[i].category
-					.toLowerCase()
-					.trim()
-					.includes(value.toLowerCase().trim()))
-		) {
-			table += generateContent(Products[i], i);
-		}
-	}
-	document.getElementById("tbody").innerHTML = table;
+  let table = "";
+  for (let product of products) {
+    if (
+      (placeholder === "Search By Title" && product.title.toLowerCase().trim().includes(value.toLowerCase().trim())) ||
+      (placeholder === "Search By Category" &&
+        product.category.toLowerCase().trim().includes(value.toLowerCase().trim()))
+    ) {
+      table += generateContent(product);
+    }
+  }
+  document.getElementById("tbody").innerHTML = table;
 }
 
-//* CLEAR DATA
-clear.addEventListener("click", () => {
-	if (confirm("Are you sure???")) {
-		localStorage.removeItem("products");
-		readDB();
-	}
-});
-
-//* DATA VALIDATION
+//* VALIDATION FUNCTIONS
 const titleError = document.querySelector(".title-error");
 const priceError = document.querySelector(".price-error");
 const taxesError = document.querySelector(".taxes-error");
@@ -224,134 +294,48 @@ const adsError = document.querySelector(".ads-error");
 const discountError = document.querySelector(".discount-error");
 const categoryError = document.querySelector(".category-error");
 
-title.addEventListener("input", () => {
-	validateTitle(title);
-});
-price.addEventListener("input", () => {
-	validatePrice(price);
-});
-taxes.addEventListener("input", () => {
-	validateTaxes(taxes);
-});
-ads.addEventListener("input", () => {
-	validateAds(ads);
-});
-discount.addEventListener("input", () => {
-	validateDiscount(discount);
-});
-category.addEventListener("input", () => {
-	validateCategory(category);
-});
-function validateTitle(e) {
-	if (e.value.trim() == null || e.value.trim() == "") {
-		errorMessage = "Title can't be blank!";
-		errorFunc(e, errorMessage, titleError);
-		return false;
-	} else if (e.value.trim().length < 3) {
-		errorMessage = "Title must be at least 3 characters long!";
-		errorFunc(e, errorMessage, titleError);
-		return false;
-	} else {
-		errorClear(e, titleError);
-		return true;
-	}
-}
-function validatePrice(e) {
-	if (e.value == null || e.value == "") {
-		errorMessage = "Price can't be blank!";
-		e.value = 0;
-		return true;
-	} else if (e.value < 0) {
-		errorMessage = "Price must be 0 or greater!";
-		errorFunc(e, errorMessage, priceError);
-		return false;
-	} else {
-		errorClear(e, priceError);
-		return true;
-	}
-}
-function validateTaxes(e) {
-	if (e.value == null || e.value == "") {
-		errorMessage = "Taxes can't be blank!";
-		e.value = 0;
-		return true;
-	} else if (e.value < 0) {
-		errorMessage = "Taxes must be 0 or greater!";
-		errorFunc(e, errorMessage, taxesError);
-		return false;
-	} else {
-		errorClear(e, taxesError);
-		return true;
-	}
-}
-function validateAds(e) {
-	if (e.value == null || e.value == "") {
-		errorMessage = "Ads can't be blank!";
-		e.value = 0;
-		return true;
-	} else if (e.value < 0) {
-		errorMessage = "Ads must be 0 or greater!";
-		errorFunc(e, errorMessage, adsError);
-		return false;
-	} else {
-		errorClear(e, adsError);
-		return true;
-	}
-}
-function validateDiscount(e) {
-	if (e.value == null || e.value == "") {
-		errorMessage = "Discount can't be blank!";
-		e.value = 0;
-		return true;
-	} else if (e.value < 0) {
-		errorMessage = "Discount must be 0 or greater!";
-		errorFunc(e, errorMessage, discountError);
-		return false;
-	} else {
-		errorClear(e, discountError);
-		return true;
-	}
-}
-function validateCategory(e) {
-	if (e.value.trim() == null || e.value.trim() == "") {
-		errorMessage = "Category can't be blank!";
-		errorFunc(e, errorMessage, categoryError);
-		return false;
-	} else if (e.value.trim().length < 3) {
-		errorMessage = "Category must be at least 3 characters long!";
-		errorFunc(e, errorMessage, categoryError);
-		return false;
-	} else {
-		errorClear(e, categoryError);
-		return true;
-	}
+title.addEventListener("input", () => validateInput(title, titleError, "Title", 3));
+price.addEventListener("input", () => validateInput(price, priceError, "Price", 0, true));
+taxes.addEventListener("input", () => validateInput(taxes, taxesError, "Taxes", 0, true));
+ads.addEventListener("input", () => validateInput(ads, adsError, "Ads", 0, true));
+discount.addEventListener("input", () => validateInput(discount, discountError, "Discount", 0, true));
+category.addEventListener("input", () => validateInput(category, categoryError, "Category", 3));
+
+function validateInput(element, errorBox, name, length, isNumber = false) {
+  let errorMessage = "";
+  if (element.value.trim() === "") {
+    errorMessage = `${name} can't be blank!`;
+  } else if (isNumber && element.value < 0) {
+    errorMessage = `${name} must be 0 or greater!`;
+  } else if (!isNumber && element.value.trim().length < length) {
+    errorMessage = `${name} must be at least ${length} characters long!`;
+  }
+  if (errorMessage) {
+    errorFunc(element, errorMessage, errorBox);
+    return false;
+  } else {
+    errorClear(element, errorBox);
+    return true;
+  }
 }
 
 function errorFunc(element, message, messageBox) {
-	element.style.border = "1px solid red";
-	messageBox.getElementsByTagName("p")[0].innerHTML = message;
-	messageBox.style.display = "flex";
+  element.style.border = "1px solid red";
+  messageBox.getElementsByTagName("p")[0].innerHTML = message;
+  messageBox.style.display = "flex";
 }
 
 function errorClear(element, messageBox) {
-	element.style.border = "";
-	messageBox.getElementsByTagName("p")[0].innerHTML = "";
-	messageBox.style.display = "";
+  element.style.border = "";
+  messageBox.getElementsByTagName("p")[0].innerHTML = "";
+  messageBox.style.display = "";
 }
 
-//* ScrollToTOP
-let btn = document.getElementById("btn-scroll");
-
+//* SCROLL TO TOP
 window.onscroll = () => {
-	if (scrollY > 400) {
-		btn.style.display = "block";
-	} else {
-		btn.style.display = "";
-	}
+  btn.style.display = scrollY > 400 ? "block" : "";
 };
 
 btn.addEventListener("click", () => {
-	scroll({ top: 0, left: 0, behavior: "smooth" });
+  scroll({ top: 0, left: 0, behavior: "smooth" });
 });
-//! scroll behavior not working until enable the smooth scrolling flag in chrome
-//! chrome://flags/#smooth-scrolling

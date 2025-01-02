@@ -21,6 +21,7 @@
 - [Live Demo](#demo)
 - [How it works](#working)
 - [Getting Started](#getting_started)
+- [Prodigy JSON Server](#prodigy-json-server)
 - [Built Using](#built_using)
 - [Contributions](#contributions)
 - [License](#license)
@@ -65,6 +66,16 @@
    ```
 
 3. Open index.html with [live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+
+## 📁 Prodigy JSON Server <a name = "prodigy-json-server"></a>
+
+To run the project with a fake JSON server, you can use the [Prodigy JSON Server repository](https://github.com/devddine/prodigy-json-server). This repository provides the necessary server setup to test the Prodigy Manager application locally.
+
+### Setup Instructions for Prodigy JSON Server
+
+1. Clone the [Prodigy JSON Server repository](https://github.com/devddine/prodigy-json-server).
+2. Follow the instructions in the Prodigy JSON Server README to set up and run the server.
+3. Once the server is running, point your Prodigy Manager app to `http://localhost:3030` for API requests.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 

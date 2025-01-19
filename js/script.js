@@ -1,11 +1,12 @@
 "use strict";
-// TODO JSON-SERVER INSTEAD OF LocalStorage === DONE
-// TODO PAGINATION SYSTEM === pending
+//TODO 
+//!FIXME ISSUE WHEN UPDATE PRODUCT / DONE
+//! PAGINATION SYSTEM / 
 
 //* GLOBAL
 let products = [];
 let errorMessage = "";
-let editId = 0;
+let editId = "";
 
 //* DOM
 const themeToggle = document.getElementById("themeToggle");
@@ -161,16 +162,15 @@ submit.addEventListener("click", async () => {
       counter > 100 ? (counter = 100) : counter;
       for (let i = 0; i < counter; i++) {
         await httpRequest("products", "POST", productData);
-        // newProducts.push(newProduct)
       }
     } else {
+      productData.id = editId /* INCLUDE "ID" PROPERTY TO FIX UNDEFINED ISSUE WHEN UPDATING A PRODUCT*/
       await httpRequest("products", "PUT", productData);
       submit.innerHTML = "Create";
       count.style.display = "";
-      editId = 0;
+      editId = "";
     }
 
-    // await httpRequest("products", "POST", newProducts);
     clearInputs();
     getProducts();
   }

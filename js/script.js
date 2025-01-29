@@ -1,14 +1,14 @@
 "use strict";
 //TODO 
-//!FIXME ISSUE WHEN UPDATE PRODUCT / DONE
+//!FIXME UPDATE PRODUCT BUG
 //! PAGINATION SYSTEM / 
 
 //* GLOBAL
-let products = [];
+
 let errorMessage = "";
 let editId = "";
 
-//* DOM
+//* DOM /constants
 const themeToggle = document.getElementById("themeToggle");
 const title = document.getElementById("title");
 const price = document.getElementById("price");
@@ -27,13 +27,13 @@ const remove = document.getElementById("remove");
 const clear = document.getElementById("clear");
 const btn = document.getElementById("btn-scroll");
 
-//* API
+//* API /constants
 const baseUrl = "http://localhost:3030/";
 const defaultHeader = {
   "Content-type": "application/json; charset=UTF-8",
 };
 
-//* API FUNCTION
+//* API FUNCTION /api
 async function httpRequest(dataType, apiMethod, content) {
   let tempMsg;
   let requestMsg = "No message yet...";
@@ -98,7 +98,7 @@ async function httpRequest(dataType, apiMethod, content) {
   }
 }
 
-//* DARK/LIGHT MODE
+//* DARK/LIGHT MODE /theme
 getTheme();
 async function getTheme() {
   let savedTheme = await httpRequest("theme", "GET");
@@ -114,7 +114,7 @@ themeToggle.addEventListener("click", async () => {
   await httpRequest("theme", "PUT", newTheme);
 });
 
-//* CALC TOTAL
+//* CALC TOTAL /dom/utils
 price.addEventListener("input", getTotal);
 taxes.addEventListener("input", getTotal);
 ads.addEventListener("input", getTotal);
@@ -135,8 +135,8 @@ function getTotal() {
   }
 }
 
-// TODO ONE REQUEST FOR CREATING MULTIPLE PRODUCTS
-//* CREATE/UPDATE PRODUCTS
+
+//* CREATE/UPDATE PRODUCTS /products
 submit.addEventListener("click", async () => {
   // let newProducts = [];
   if (
@@ -176,7 +176,7 @@ submit.addEventListener("click", async () => {
   }
 });
 
-//* CLEAR INPUTS
+//* CLEAR INPUTS /utils
 function clearInputs() {
   title.value = "";
   price.value = "";
@@ -188,7 +188,7 @@ function clearInputs() {
   getTotal();
 }
 
-//* READ/SHOW DATA
+//* READ/SHOW DATA /products
 getProducts();
 async function getProducts() {
   let table = "";
@@ -207,7 +207,7 @@ async function getProducts() {
   document.getElementById("tbody").innerHTML = table;
 }
 
-function generateContent(product) {
+function generateContent(product) { /* utils */
   return `
 			<tr>
 					<td>${product.id}</td>
@@ -225,7 +225,7 @@ function generateContent(product) {
 			</tr>`;
 }
 
-// * DELETE PRODUCTS
+// * DELETE PRODUCTS /products
 async function removeProduct(id, multi) {
   await httpRequest("products", "DELETE", id);
   if (multi !== true) {
@@ -233,7 +233,7 @@ async function removeProduct(id, multi) {
   }
 }
 
-//* CLEAR DATA
+//* CLEAR DATA /products
 clear.addEventListener("click", async () => {
   if (confirm("Are you sure?")) {
     for (let product of products) {
@@ -243,7 +243,7 @@ clear.addEventListener("click", async () => {
   }
 });
 
-//* UPDATE
+//* UPDATE /products
 async function editProduct(id) {
   let product = await httpRequest("products", "GET", id);
   title.value = product.title;
@@ -259,7 +259,7 @@ async function editProduct(id) {
   scroll({ top: 0, left: 0, behavior: "smooth" });
 }
 
-//* SEARCH
+//* SEARCH /filter
 searchTitle.addEventListener("click", () => {
   search.placeholder = "Search By Title";
   searchData(search.value, search.placeholder);
@@ -286,7 +286,7 @@ function searchData(value, placeholder) {
   document.getElementById("tbody").innerHTML = table;
 }
 
-//* VALIDATION FUNCTIONS
+//* VALIDATION FUNCTIONS /constants/dom/validation
 const titleError = document.querySelector(".title-error");
 const priceError = document.querySelector(".price-error");
 const taxesError = document.querySelector(".taxes-error");
@@ -331,7 +331,7 @@ function errorClear(element, messageBox) {
   messageBox.style.display = "";
 }
 
-//* SCROLL TO TOP
+//* SCROLL TO TOP /scroll
 window.onscroll = () => {
   btn.style.display = scrollY > 400 ? "block" : "";
 };

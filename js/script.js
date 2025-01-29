@@ -258,7 +258,7 @@ async function editProduct(id) {
   editId = id;
   scroll({ top: 0, left: 0, behavior: "smooth" });
 }
-
+.
 //* SEARCH /filter
 searchTitle.addEventListener("click", () => {
   search.placeholder = "Search By Title";

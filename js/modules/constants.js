@@ -1,5 +1,13 @@
 /** @file important constants */
 
+
+let global = {
+  products : [],
+  editId : "",
+  errorMessage : "",
+}
+
+
 /**
  * API constants
  *
@@ -35,6 +43,12 @@ const domElements = {
   remove: document.getElementById("remove"),
   clear: document.getElementById("clear"),
   btn: document.getElementById("btn-scroll"),
+  titleError: document.querySelector(".title-error"),
+  priceError: document.querySelector(".price-error"),
+  taxesError: document.querySelector(".taxes-error"),
+  adsError: document.querySelector(".ads-error"),
+  discountError: document.querySelector(".discount-error"),
+  categoryError: document.querySelector(".category-error"),
 };
 
-export { api, domElements };
+export { global, api, domElements };

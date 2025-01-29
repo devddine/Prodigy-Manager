@@ -1,22 +1,20 @@
 import { getTotal, clearInputs, generateContent } from "./utils.js";
 import { httpRequest } from "./api.js";
-
-let products = [];
-let editId = "";
+import { domElements, global } from "./constants.js";
 
 //* READ/SHOW DATA /products
 async function getProducts() {
   let table = "";
-  products = await httpRequest("products", "GET");
-  if (products.length > 0) {
-    clear.style.display = "";
-    clear.innerHTML = `Clear All Data !!! (${products.length})`;
+  global.products = await httpRequest("products", "GET");
+  if (global.products.length > 0) {
+    domElements.clear.style.display = "";
+    domElements.clear.innerHTML = `Clear All Data !!! (${global.products.length})`;
   } else {
-    clear.style.display = "none";
-    clear.innerHTML = ``;
+    domElements.clear.style.display = "none";
+    domElements.clear.innerHTML = ``;
   }
 
-  for (let product of products) {
+  for (let product of global.products) {
     table += generateContent(product);
   }
   document.getElementById("tbody").innerHTML = table;
@@ -33,27 +31,27 @@ async function createProduct() {
     validateInput(category, categoryError, "Category", 3)
   ) {
     const productData = {
-      title: title.value.trim(),
-      price: Number(price.value),
-      taxes: Number(taxes.value),
-      ads: Number(ads.value),
-      discount: Number(discount.value),
-      total: total.textContent,
-      category: category.value.trim(),
+      title: domElements.title.value.trim(),
+      price: Number(domElements.price.value),
+      taxes: Number(domElements.taxes.value),
+      ads: Number(domElements.ads.value),
+      discount: Number(domElements.discount.value),
+      total: domElements.total.textContent,
+      category: domElements.category.value.trim(),
     };
-    if (submit.textContent === "Create") {
-      let counter = Number(count.value);
+    if (domElements.submit.textContent === "Create") {
+      let counter = Number(domElements.count.value);
       counter <= 0 ? (counter = 1) : counter;
       counter > 100 ? (counter = 100) : counter;
       for (let i = 0; i < counter; i++) {
         await httpRequest("products", "POST", productData);
       }
     } else {
-      productData.id = editId;
+      productData.id = global.editId;
       await httpRequest("products", "PUT", productData);
-      submit.innerHTML = "Create";
-      count.style.display = "";
-      editId = "";
+      domElements.submit.innerHTML = "Create";
+      domElements.count.style.display = "";
+      global.editId = "";
     }
 
     clearInputs();
